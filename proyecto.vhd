@@ -1,36 +1,52 @@
+-- filepath: /Users/jonathanvazquez/Documents/Programacion/VSCode/Proyecto fdd/Ezequielito/proyecto.vhd
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL; -- Para operaciones aritméticas con std_logic_vector
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity GAL1 is
+entity Proyecto is
     Port (
-        clk, send, close : in std_logic;
-        sw: in  std_logic_vector(3 downto 0);
-        n : out std_logic_vector (3 downto 0);
-        s : out std_logic_vector (2 downto 0);
-        Lr, Lv : out STD_LOGIC
+        clk : in std_logic;
+        cerrar : in std_logic;
+        enviar : in std_logic;
+        sw : in std_logic_vector(3 downto 0);
+        Lr : out std_logic;
+        Lv : out std_logic
     );
-end GAL1;
+end Proyecto;
 
-architecture Behavioral of GAL1 is
-    signal Lrs: std_logic := '1';
-    signal psw: std_logic := '0';
-    signal comparison_count: std_logic_vector(1 downto 0) := "00"; -- Contador de 2 bits
+architecture Comportamental of Proyecto is
+    signal Lrs : std_logic := '1';
+    signal psw : std_logic := '0';
+    signal contador_comparacion : std_logic_vector(1 downto 0) := "00";
+    signal comparacion_actual : integer range 0 to 3 := 0;
+    constant contraseña1 : std_logic_vector(3 downto 0) := "0001";
+    constant contraseña2 : std_logic_vector(3 downto 0) := "0010";
+    constant contraseña3 : std_logic_vector(3 downto 0) := "0011";
 begin
     process(clk)
     begin
-        if CLK'event and CLK = '1' then
-            if close = '1' then
+        if clk'event and clk = '1' then
+            if cerrar = '1' then
                 psw <= '0';
                 Lrs <= '1';
-                comparison_count <= "00"; -- Reinicia el contador cuando se cierra
-            end if;
-
-            if send = '1' and comparison_count < "11" then -- Permitir comparación solo si contador < 3
-                if sw1 = '0' and sw2 = '1' and sw3 = '1' and sw4 = '0' then
+                contador_comparacion <= (others => '0');
+                comparacion_actual <= 0; 
+            elsif enviar = '1' then
+                if comparacion_actual = 0 and sw = contraseña1 then
                     psw <= '1';
+                    comparacion_actual <= comparacion_actual + 1;
+
+                elsif comparacion_actual = 1 and sw = contraseña2 then
+                    psw <= '1';
+                    comparacion_actual <= comparacion_actual + 1;
+
+                elsif comparacion_actual = 2 and sw = contraseña3 then
+                    psw <= '1';
+                    comparacion_actual <= 0;  
+                else
+                    psw <= '0';
                 end if;
-                comparison_count <= std_logic_vector(unsigned(comparison_count) + 1); -- Incrementa el contador
             end if;
 
             if psw = '1' then
@@ -38,7 +54,7 @@ begin
             end if;
         end if;
     end process;
-    
-    LR <= LRs;
-    LV <= not LRs;
-end Behaviora;
+
+    Lr <= Lrs;
+    Lv <= not Lrs;
+end Comportamental;
