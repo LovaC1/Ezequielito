@@ -4,8 +4,10 @@ use IEEE.NUMERIC_STD.ALL; -- Para operaciones aritméticas con std_logic_vector
 
 entity GAL1 is
     Port (
-        clk, send, close : in  STD_LOGIC;           
-        sw1, sw2, sw3, sw4 : in  STD_LOGIC;
+        clk, send, close : in std_logic;
+        sw: in  std_logic_vector(3 downto 0);
+        n : out std_logic_vector (3 downto 0);
+        s : out std_logic_vector (2 downto 0);
         Lr, Lv : out STD_LOGIC
     );
 end GAL1;
@@ -39,4 +41,4 @@ begin
     
     LR <= LRs;
     LV <= not LRs;
-end Behavioral;
+end Behaviora;
