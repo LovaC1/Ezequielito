@@ -4,7 +4,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity Proyecto is
+entity gal1 is
     Port (
         clk : in std_logic;
         cerrar : in std_logic;
@@ -15,7 +15,7 @@ entity Proyecto is
     );
 end Proyecto;
 
-architecture Comportamental of Proyecto is
+architecture Behavioral of gal1 is
     signal Lrs : std_logic := '1';
     signal psw : std_logic := '0';
     signal contador_comparacion : std_logic_vector(1 downto 0) := "00";
@@ -57,4 +57,4 @@ begin
 
     Lr <= Lrs;
     Lv <= not Lrs;
-end Comportamental;
+end Behavioral;
