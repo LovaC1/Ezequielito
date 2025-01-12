@@ -23,7 +23,7 @@ begin
             else
                 count_disp <= count_disp +1;
             end if;
-        endif;
+        end if;
     end process;
 
     process(clk)
