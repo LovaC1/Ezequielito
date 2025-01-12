@@ -13,7 +13,7 @@ entity gal1 is
         Lr : out std_logic;
         Lv : out std_logic
     );
-end gla1;
+end gal1;
 
 architecture Behavioral of gal1 is
     signal Lrs : std_logic := '1';
